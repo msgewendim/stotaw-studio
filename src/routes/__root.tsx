@@ -1,8 +1,10 @@
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
+import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
-
 import appCss from '../styles.css?url'
+import { Header } from '@/components/layout/Header'
+import { Footer } from '@/components/layout/Footer'
+
 
 export const Route = createRootRoute({
   head: () => ({
@@ -15,7 +17,11 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'TanStack Start Starter',
+        title: 'Digital Art Portfolio',
+      },
+      {
+        name: 'description',
+        content: 'Digital sketches exploring the boundaries between reality and imagination',
       },
     ],
     links: [
@@ -26,8 +32,29 @@ export const Route = createRootRoute({
     ],
   }),
 
+  component: RootLayout,
   shellComponent: RootDocument,
 })
+
+
+function RootLayout() {
+  return (
+    <>
+      {/* Background effects */}
+      <div className="fixed inset-0 bg-gradient-radial pointer-events-none" />
+      <div className="noise-overlay" />
+
+      {/* Content */}
+      <div className="relative z-10 min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1">
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
+    </>
+  )
+}
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
